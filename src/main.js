@@ -14,7 +14,15 @@ import './assets/css/reset.css'
 // 配置axios为全局使用
 import axios from 'axios'
 Vue.prototype.$axios=axios;
+// 引入过滤器
+import Filter from './filter'
+for(var i in Filter){
+  Vue.filter(i,Filter[i]);
+}
+// import $ from 'jquery'
+// Vue.prototype.$ = $;
 
+// import 'bootstrap/dist/css/bootstrap.min.css'
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
