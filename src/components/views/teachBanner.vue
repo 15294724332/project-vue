@@ -18,7 +18,7 @@
       </el-table-column>
     </el-table>
     <!-- 添加蒙版 -->
-    <el-dialog title="添加banner" :visible.sync="isshow">
+    <el-dialog title="添加家教banner" :visible.sync="isshow">
       <el-form :model="banner">
         <el-form-item label="图片" :label-width="Width">
           <el-input v-model="banner.img" autocomplete="off" placeholder="请输入图片地址"></el-input>
@@ -35,7 +35,7 @@
   </div>
 </template>
 <script>
-import API from "../common/js/API";
+import API from "../../common/js/API";
 export default {
   data() {
     return {
@@ -47,13 +47,13 @@ export default {
       },
       Width: "60px",
       //传过去的接口（删除）
-      api: API.delbanner
+      api: API.delTeaBanner
     };
   },
   methods: {
     init() {
       this.$axios({
-        url: API.findbanner,
+        url: API.findTeaBanner,
         method: "get"
       }).then(res => {
         //console.log(res)
@@ -76,7 +76,7 @@ export default {
     },
     addBtn() {
       this.$axios({
-        url: API.addbanner,
+        url: API.addTeaBanner,
         method: "get",
         params: this.banner
       }).then(res => {
@@ -103,7 +103,7 @@ export default {
 };
 </script>
 <style lang="stylus" scoped>
-@import '../common/stylus/index.styl';
+@import '../../common/stylus/index.styl';
 
 .img {
   width: 200px;

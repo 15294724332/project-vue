@@ -9,7 +9,7 @@
           <img :src="scope.row.img" class="img" />
         </template>
       </el-table-column>
-      <el-table-column prop="des" label="描述"></el-table-column>
+      <el-table-column prop="type" label="描述"></el-table-column>
       <el-table-column label="操作" fixed="right">
         <template slot-scope="scope">
           <v-del :id="scope.row.id" :api="api" @parentInit="init()"></v-del>
@@ -18,13 +18,13 @@
       </el-table-column>
     </el-table>
     <!-- 添加蒙版 -->
-    <el-dialog title="添加banner" :visible.sync="isshow">
+    <el-dialog title="添加家教类型" :visible.sync="isshow">
       <el-form :model="banner">
         <el-form-item label="图片" :label-width="Width">
           <el-input v-model="banner.img" autocomplete="off" placeholder="请输入图片地址"></el-input>
         </el-form-item>
         <el-form-item label="描述" :label-width="Width">
-          <el-input v-model="banner.des" autocomplete="off" placeholder="描述"></el-input>
+          <el-input v-model="banner.type" autocomplete="off" placeholder="描述"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -35,25 +35,25 @@
   </div>
 </template>
 <script>
-import API from "../common/js/API";
+import API from "../../common/js/API";
 export default {
   data() {
     return {
       d: [],
       isshow: false,
       banner: {
-        des: "",
+        type: "",
         img: ""
       },
       Width: "60px",
       //传过去的接口（删除）
-      api: API.delbanner
+      api: API.delTeaType
     };
   },
   methods: {
     init() {
       this.$axios({
-        url: API.findbanner,
+        url: API.findTeaType,
         method: "get"
       }).then(res => {
         //console.log(res)
@@ -71,12 +71,12 @@ export default {
       this.isshow = true;
       this.banner = {
         img: "",
-        des: ""
+        type: ""
       };
     },
     addBtn() {
       this.$axios({
-        url: API.addbanner,
+        url: API.addTeaType,
         method: "get",
         params: this.banner
       }).then(res => {
@@ -103,7 +103,7 @@ export default {
 };
 </script>
 <style lang="stylus" scoped>
-@import '../common/stylus/index.styl';
+@import '../../common/stylus/index.styl';
 
 .img {
   width: 200px;

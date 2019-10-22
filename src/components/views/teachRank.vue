@@ -9,7 +9,12 @@
           <img :src="scope.row.img" class="img" />
         </template>
       </el-table-column>
-      <el-table-column prop="des" label="描述"></el-table-column>
+      <el-table-column prop="num" label="报名人数"></el-table-column>
+      <el-table-column label="授课机构">
+        <template slot-scope="scope">
+          <img :src="scope.row.teacherImg" class="img" />
+        </template>
+      </el-table-column>
       <el-table-column label="操作" fixed="right">
         <template slot-scope="scope">
           <v-del :id="scope.row.id" :api="api" @parentInit="init()"></v-del>
@@ -18,13 +23,16 @@
       </el-table-column>
     </el-table>
     <!-- 添加蒙版 -->
-    <el-dialog title="添加banner" :visible.sync="isshow">
-      <el-form :model="banner">
+    <el-dialog title="添加家教排行" :visible.sync="isshow">
+      <el-form :model="teaTop">
         <el-form-item label="图片" :label-width="Width">
-          <el-input v-model="banner.img" autocomplete="off" placeholder="请输入图片地址"></el-input>
+          <el-input v-model="teaTop.img" autocomplete="off" placeholder="请输入图片地址"></el-input>
         </el-form-item>
-        <el-form-item label="描述" :label-width="Width">
-          <el-input v-model="banner.des" autocomplete="off" placeholder="描述"></el-input>
+        <el-form-item label="机构图片" :label-width="Width">
+          <el-input v-model="teaTop.teacherImg" autocomplete="off" placeholder="请输入机构图片"></el-input>
+        </el-form-item>
+        <el-form-item label="报名人数" :label-width="Width">
+          <el-input v-model="teaTop.num" autocomplete="off" placeholder="请输入报名人数"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -35,25 +43,26 @@
   </div>
 </template>
 <script>
-import API from "../common/js/API";
+import API from "../../common/js/API";
 export default {
   data() {
     return {
       d: [],
       isshow: false,
-      banner: {
-        des: "",
-        img: ""
+      teaTop: {
+        teacherImg: "",
+        img: "",
+        num: ""
       },
       Width: "60px",
       //传过去的接口（删除）
-      api: API.delbanner
+      api: API.delTeaTop
     };
   },
   methods: {
     init() {
       this.$axios({
-        url: API.findbanner,
+        url: API.findTeaTop,
         method: "get"
       }).then(res => {
         //console.log(res)
@@ -69,16 +78,17 @@ export default {
     },
     add() {
       this.isshow = true;
-      this.banner = {
+      this.teaTop = {
+        teacherImg: "",
         img: "",
-        des: ""
+        num: ""
       };
     },
     addBtn() {
       this.$axios({
-        url: API.addbanner,
+        url: API.addTeaTop,
         method: "get",
-        params: this.banner
+        params: this.teaTop
       }).then(res => {
         // console.log(res)
         if (res.data.isok) {
@@ -103,7 +113,7 @@ export default {
 };
 </script>
 <style lang="stylus" scoped>
-@import '../common/stylus/index.styl';
+@import '../../common/stylus/index.styl';
 
 .img {
   width: 200px;

@@ -9,22 +9,17 @@
           <img :src="scope.row.img" class="img" />
         </template>
       </el-table-column>
-      <el-table-column prop="des" label="描述"></el-table-column>
       <el-table-column label="操作" fixed="right">
         <template slot-scope="scope">
           <v-del :id="scope.row.id" :api="api" @parentInit="init()"></v-del>
-          <!-- <el-button size="mini" type="danger" @click="del(scope.row.id)" class="del">删除</el-button> -->
         </template>
       </el-table-column>
     </el-table>
     <!-- 添加蒙版 -->
-    <el-dialog title="添加banner" :visible.sync="isshow">
+    <el-dialog title="添加家政banner" :visible.sync="isshow">
       <el-form :model="banner">
         <el-form-item label="图片" :label-width="Width">
           <el-input v-model="banner.img" autocomplete="off" placeholder="请输入图片地址"></el-input>
-        </el-form-item>
-        <el-form-item label="描述" :label-width="Width">
-          <el-input v-model="banner.des" autocomplete="off" placeholder="描述"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -35,28 +30,25 @@
   </div>
 </template>
 <script>
-import API from "../common/js/API";
+import API from "../../common/js/API";
 export default {
   data() {
     return {
       d: [],
+      api: API.delHomeBanner,
       isshow: false,
-      banner: {
-        des: "",
-        img: ""
-      },
       Width: "60px",
-      //传过去的接口（删除）
-      api: API.delbanner
+      banner: {
+        img: ""
+      }
     };
   },
   methods: {
     init() {
       this.$axios({
-        url: API.findbanner,
-        method: "get"
+        url: API.findHomeBanner
       }).then(res => {
-        //console.log(res)
+        console.log(res);
         if (res.data.isok) {
           this.d = res.data.data;
         } else {
@@ -70,13 +62,12 @@ export default {
     add() {
       this.isshow = true;
       this.banner = {
-        img: "",
-        des: ""
+        img: ""
       };
     },
     addBtn() {
       this.$axios({
-        url: API.addbanner,
+        url: API.addHomeBanner,
         method: "get",
         params: this.banner
       }).then(res => {
@@ -103,7 +94,7 @@ export default {
 };
 </script>
 <style lang="stylus" scoped>
-@import '../common/stylus/index.styl';
+@import '../../common/stylus/index.styl';
 
 .img {
   width: 200px;

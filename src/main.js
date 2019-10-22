@@ -19,10 +19,11 @@ import Filter from './filter'
 for(var i in Filter){
   Vue.filter(i,Filter[i]);
 }
-// import $ from 'jquery'
-// Vue.prototype.$ = $;
-
-// import 'bootstrap/dist/css/bootstrap.min.css'
+// 引入全局组件
+import commonCom from './components/common' 
+for (var key in commonCom){
+  Vue.component(key,commonCom[key]);
+}
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

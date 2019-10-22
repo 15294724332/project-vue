@@ -13,7 +13,6 @@ const water = () => import('../pages/water.vue');
 const house = () => import('../pages/house.vue');
 const changePass = () => import('../pages/changePass.vue');
 const service = () => import('../pages/service.vue');
-
 export default new Router({
   routes: [
     {
@@ -42,7 +41,7 @@ export default new Router({
         {
           path:"teach",
           component:teach,
-          name:"家教管理"
+          name:"家教管理",
         },
         {
           path:"water",

@@ -1,3 +1,3 @@
-import time from './time'
+import timeFilter from './time'
 
-export default {time}
+export default {timeFilter}
